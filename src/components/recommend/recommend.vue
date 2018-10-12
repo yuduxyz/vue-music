@@ -1,15 +1,15 @@
 <template>
   <div>
+    <div v-if="recommendList.length" class="slider-wrapper">
+      <slider>
+        <div class="slider-item" v-for="(item, index) in recommendList" :key="index">
+          <a :href="item.linkUrl">
+            <img :src="item.picUrl">
+          </a>
+        </div>
+      </slider>
+    </div>
     <div class="recommend-list">
-      <div v-if="recommendList.length" class="recommend-wrapper">
-        <slider>
-          <div v-for="(item, index) in recommendList" :key="index">
-            <a :href="item.linkUrl">
-              <img :src="item.picUrl">
-            </a>
-          </div>
-        </slider>
-      </div>
       <h1 class="list-title">热门歌单推荐</h1>
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
     _fetchRecommend () {
       fetchRecommend().then((res) => {
         if (res.code === ERR_OK) {
-          this.recomendList = res.data.slider
+          this.recommendList = res.data.slider
         }
       })
     }
@@ -47,6 +47,8 @@ export default {
 <style lang="stylus" scoped>
   @import '~common/stylus/variable'
 
+  .slider-wrapper
+    width: 100%
   .recommend-list
     .list-title
       height: 65px
